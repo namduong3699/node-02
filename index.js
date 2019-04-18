@@ -1,23 +1,41 @@
-let http = require("http");
-let functionHandler = require('./handler');
+const http = require('http');
+const url = require('url');
+const host = process.env.HOST;
+const port = process.env.PORT;
 
-let handler = {
-    'GET' : functionHandler.GET(),
-    'POST': functionHandler.POST(),
-    'PUT' : functionHandler.PUT(),
-    'DELETE': functionHandler.DELETE()
+function readWorld() {
+    return 'world';
 };
 
-let server =  http.createServer(function (req,res) {
+function createWorld() {
+    return 'world created';
+};
+
+function updateWorld() {
+    return 'world updated';
+};
+
+function deleteWorld() {
+    return 'world deleted';
+};
+
+const handler = {
+    'GET' : readWorld(),
+    'POST': createWorld(),
+    'PUT' : updateWorld(),
+    'DELETE': deleteWorld()
+};
+const server =  http.createServer(function (req,res) {
     res.writeHead(200, {'Content-Type':'text/html'});
-    let url = req.url;
-    let _method = req.method;
-    if (url==='/hello'){
+    const _method = req.method;
+    const url = req.url;
+    if (url === '/hello'){
         res.write(handler[_method]);
+    } else {
+      res.write('404 not found');
     }
     res.end();
 });
-
-server.listen(3000, function () {
-    console.log('server start at port 3000');
+server.listen(port, host, function(err){
+	if(!err) console.log('Port: ' + port);
 });
