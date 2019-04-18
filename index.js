@@ -36,6 +36,6 @@ const server =  http.createServer(function (req,res) {
     }
     res.end();
 });
-server.listen(port, host, function(err){
-	if(!err) console.log('Port: ' + port);
+server.listen(3000, 'localhost', function(err){
+	if(!err) console.log('Port: ' + 3000);
 });
